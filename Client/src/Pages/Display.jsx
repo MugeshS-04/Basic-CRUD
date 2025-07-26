@@ -6,19 +6,28 @@ const Display = () => {
 
   const [book, setBook] = useState([])
 
-  useEffect(() => {
+  const getbook = async() => {
+    const book_data = await axios.get('http://localhost:5000/api/getbooks')
+    setBook(book_data.data)
+  }
 
-    const getbook = async() => {
-      const book_data = await axios.get('http://localhost:5000/api/getbooks')
-      setBook(book_data.data)
-    }
+  useEffect(() => {
 
     getbook()
 
-  },[])
-
-const deletebook = async(id) => {
-    const deletebook = await axios.delete(`http://localhost:5000/api/deletebooks/${id}`)
+  },[book])
+  
+  
+  const deletebook = async(id) => {
+    try{
+      const deletebook = await axios.delete(`http://localhost:5000/api/deletebooks/${id}`)
+      console.log(deletebook.data)
+      getbook()
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
 }
 
   return (
