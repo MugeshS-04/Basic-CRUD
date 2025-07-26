@@ -17,7 +17,9 @@ const Display = () => {
 
   },[])
 
-
+const deletebook = async(id) => {
+    const deletebook = await axios.delete(`http://localhost:5000/api/deletebooks/${id}`)
+}
 
   return (
     <div>
@@ -27,6 +29,8 @@ const Display = () => {
             <h2>{book.author}</h2>
             <h2>{book.theme}</h2>
             <h2>{new Date(book.date).toLocaleDateString()}</h2>
+            <button>Update</button>
+            <button onClick={() => deletebook(book._id)}>Delete</button>
           </div>
         ))}
     </div>

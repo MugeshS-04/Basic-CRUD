@@ -39,3 +39,10 @@ export const getbooks = async(req, res) => {
         res.status(500).json({success : false, message : error})
     }
 }
+
+export const deletebooks = async(req, res) => {
+    await BookScheme.findOneAndDelete(req.params.id)
+    res.status(201).json({success : true})
+}
+
+
