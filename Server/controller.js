@@ -45,4 +45,22 @@ export const deletebooks = async(req, res) => {
     res.status(201).json({success : true})
 }
 
+export const updatebook = async(req, res) => {
+    const id = req.params.id
+    const updated_value = req.body
+
+    try{
+        const updatedBook = await BookScheme.findByIdAndUpdate(id, updated_value)
+
+        if (!updatedBook) {
+            return res.status(404).json({ message: 'Book not found'});
+        }
+
+        return res.status(200).json({success : true, message : "Book updated successfully!"})
+    }
+    catch(error)
+    {
+        return res.status(500).json({success: false, message : error})
+    }
+}
 

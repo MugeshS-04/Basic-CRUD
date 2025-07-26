@@ -1,16 +1,18 @@
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Display = () => {
 
   const [book, setBook] = useState([])
+  const navigate = useNavigate()
 
   const getbook = async() => {
     const book_data = await axios.get('http://localhost:5000/api/getbooks')
     setBook(book_data.data)
   }
 
+  //used for refresing the content in the display
   useEffect(() => {
 
     getbook()
@@ -28,7 +30,12 @@ const Display = () => {
     {
       console.log(error)
     }
-}
+  }
+
+  const updatehandler = (book) =>
+  {
+    navigate(`/update`, {state : book})
+  }
 
   return (
     <div>
@@ -38,7 +45,7 @@ const Display = () => {
             <h2>{book.author}</h2>
             <h2>{book.theme}</h2>
             <h2>{new Date(book.date).toLocaleDateString()}</h2>
-            <button>Update</button>
+            <button onClick={() => updatehandler(book)}>Update</button>
             <button onClick={() => deletebook(book._id)}>Delete</button>
           </div>
         ))}
