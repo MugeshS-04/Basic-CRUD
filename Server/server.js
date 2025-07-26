@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import 'dotenv/config';
 import connectDB from './db.js'
-import addbooks from './controller.js'
+import {addbooks, getbooks} from './controller.js'
 
 const app = express()
 const port = 5000
@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/addbooks', addbooks)
+app.get('/api/getbooks', getbooks)
 
 
 app.listen(port,() => console.log("Server is listening on port 5000"))

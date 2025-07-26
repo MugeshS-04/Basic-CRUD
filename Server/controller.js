@@ -1,6 +1,6 @@
 import BookScheme from "./model.js"
 
-const addbooks = async(req, res) => {
+export const addbooks = async(req, res) => {
     const{title, author, theme, date} = req.body
 
     if(title == null || author == null || theme == null || date == null)
@@ -29,5 +29,13 @@ const addbooks = async(req, res) => {
     }
 }
 
-export default addbooks
-
+export const getbooks = async(req, res) => {
+    try{
+        const book = await BookScheme.find()
+        res.status(201).json(book)
+    }
+    catch(error)
+    {
+        res.status(500).json({success : false, message : error})
+    }
+}
